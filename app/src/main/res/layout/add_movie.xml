@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/red">
+
+            </android.support.v7.widget.Toolbar>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/etSearchTermQues"
+                    android:layout_width="0px"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="11"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/ic_clear_black_36dp"
+                    android:gravity="center"
+                    android:hint="Search Movies"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:id="@+id/bSearchQues"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_marginLeft="5dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_search_white_36dp" />
+
+            </LinearLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/red"
+            android:scrollbarThumbVertical="@color/black"
+            android:scrollbars="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+        <TextView
+            android:id="@+id/tvPlaceHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:gravity="center"
+            android:textColor="@color/grey"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:text="No Movies / TV Shows found"
+            android:textSize="30sp"
+            android:visibility="gone" />
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>

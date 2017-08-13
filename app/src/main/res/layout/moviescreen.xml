@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/com.mikhaellopez.circularprogressbar"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/darkgrey"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/ivPoster"
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:src="@drawable/sample"
+                        android:visibility="invisible" />
+
+                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                        android:id="@+id/cpGrid"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        app:cpb_progress="20"
+                        app:cpb_background_color="#CE3A3A"
+                        app:cpb_background_progressbar_color="#CE3A3A"
+                        app:cpb_background_progressbar_width="3dp"
+                        app:cpb_progressbar_color="#CE3A3A"
+                        app:cpb_progressbar_width="10dp" />
+
+                    <TextView
+                        android:id="@+id/percentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="69%"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+
+                        />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Harry Potter and the Order of Phoenix"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:text="2011"/>
+
+                    <TextView
+                        android:id="@+id/tvDuration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_marginTop="5dp"
+                        android:paddingLeft="15dp"
+                        android:textColor="@color/white"
+                        android:textStyle="italic"
+                        android:text="162 min"/>
+
+                    <TextView
+                        android:id="@+id/tvSeasons"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_marginTop="5dp"
+                        android:paddingLeft="15dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:text="3 Seasons"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvGenre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/blue"
+                    android:text="Action, Adventure, Fantasy"/>
+
+                <TextView
+                    android:id="@+id/tvPlot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:textColor="@color/lightgray"
+                    android:text="Plot - A paraplegic marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home."/>
+
+                <TextView
+                    android:id="@+id/tvDirector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/white"
+                    android:textStyle="italic"
+                    android:text="Director - James Cameron"/>
+
+                <TextView
+                    android:id="@+id/tvStars"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/white"
+                    android:textStyle="italic"
+                    android:text="Starring - Sam Worthington, Zoe Saldana, Sigourney Weaver, Stephen Lang"/>
+
+                <TextView
+                    android:id="@+id/tvIMDB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/yellow"
+                    android:text="IMDb Rating - 7.8/10"/>
+
+                <TextView
+                    android:id="@+id/tvTomato"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/red"
+                    android:text="Rotten Tomatoes - 83%"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="top|left"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/ibBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_back_white_36dp"
+                android:background="@null"
+                android:layout_margin="15dp"
+                android:padding="8dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="top|right"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/ibDone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_done_white_36dp"
+                android:background="@null"
+                android:layout_marginTop="10dp"
+                android:layout_margin="15dp"
+                android:padding="8dp"/>
+
+            <ImageButton
+                android:id="@+id/ibDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete_forever_white_36dp"
+                android:background="@null"
+                android:layout_marginTop="10dp"
+                android:layout_margin="15dp"
+                android:padding="8dp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvPlaceHolder"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:textSize="20sp"
+            android:text="Oops, Something went wrong"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>
