@@ -1,4 +1,4 @@
-package com.sanved.moviewatchlistplus;
+package com.sanved.moviewatchlistplus2;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,6 +21,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,11 +49,12 @@ public class AddMovie extends AppCompatActivity {
     TextView placeholder;
     Toolbar toolbar;
     RecyclerView rv;
-    RVAdapt adapt;
+    RVAdapt2 adapt2;
     LinearLayoutManager llm;
-    ArrayList<MovieData> list;
+    ArrayList<SearchData> list;
     EditText search;
     ImageButton searchB;
+    private Tracker mTracker;
 
     String term = "";
 
@@ -63,12 +67,15 @@ public class AddMovie extends AppCompatActivity {
 
 
         Context con = getApplication();
-        adapt = new RVAdapt(list,con,2);
+        adapt2 = new RVAdapt2(list,con,2);
 
-        rv.setAdapter(adapt);
+        rv.setAdapter(adapt2);
     }
 
     public void initVals(){
+
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
 
         list = new ArrayList<>();
 
@@ -153,7 +160,7 @@ public class AddMovie extends AppCompatActivity {
             Toast.makeText(this, "Please enter something in the search box", Toast.LENGTH_SHORT).show();
         }else {
             list.clear();
-            adapt.notifyDataSetChanged();
+            adapt2.notifyDataSetChanged();
             new MovieSearchTask().execute();
         }
     }
@@ -214,6 +221,7 @@ public class AddMovie extends AppCompatActivity {
 
                 inputStream.close();
                 result = sBuilder.toString();
+                Log.d("", result);
 
             } catch (Exception e) {
                 Log.e("StringBuilding", "Error converting result " + e.toString());
@@ -222,7 +230,7 @@ public class AddMovie extends AppCompatActivity {
         }
 
         protected void onPostExecute(Void v) {
-            MovieData sd;
+            SearchData sd;
             //parse JSON data
             try {
                 //Taking JSON from Assets
@@ -245,16 +253,16 @@ public class AddMovie extends AppCompatActivity {
                     String link = jo_inside.getString("Poster");
                     String year = jo_inside.getString("Year");
                     String imdb = jo_inside.getString("imdbID");
-                    sd = new MovieData(link, name, year,imdb);
+                    sd = new SearchData(link, name, year,imdb);
 
                     list.add(sd);
                     //Adding the HashMap to the ArrayList
                 }
                 this.progressDialog.dismiss();
-                Context con = AddMovie.this.getApplication();
-                adapt = new RVAdapt(list,con, 2);
+                Context con = AddMovie.this.getApplicationContext();
+                adapt2 = new RVAdapt2(list,con, 2);
 
-                rv.setAdapter(adapt);
+                rv.setAdapter(adapt2);
 
             } catch (JSONException e) {
                 Log.e("JSONException", "Error: " + e.toString());
@@ -264,6 +272,13 @@ public class AddMovie extends AppCompatActivity {
             } // catch (JSONException e)
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTracker.setScreenName("AddMovie");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
 }

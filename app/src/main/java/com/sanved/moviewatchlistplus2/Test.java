@@ -1,4 +1,4 @@
-package com.sanved.moviewatchlistplus;
+package com.sanved.moviewatchlistplus2;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;

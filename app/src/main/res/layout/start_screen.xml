@@ -34,6 +34,7 @@
             android:layout_height="match_parent"
             android:scrollbarThumbVertical="@color/black"
             android:scrollbars="vertical"
+            android:background="@color/grey"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
@@ -46,16 +47,6 @@
             android:focusable="true"
             android:clickable="true"
             android:src="@drawable/ic_movie_filter_white_36dp" />
-
-
-        <TextView
-            android:id="@+id/tvPlaceHolder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:text="Pull Down to Refresh"
-            android:textSize="30sp"
-            android:visibility="gone" />
 
 
     </android.support.design.widget.CoordinatorLayout>

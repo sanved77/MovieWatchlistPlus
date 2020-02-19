@@ -1,9 +1,10 @@
-package com.sanved.moviewatchlistplus;
+package com.sanved.moviewatchlistplus2;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -37,16 +38,20 @@ public class RVAdapt extends RecyclerView.Adapter<RVAdapt.DataHolder> {
     ImageLoader imageLoader;
     static SQLiteHelper db;
     static int player;
+    Typeface font;
 
     Context context;
 
     RVAdapt(ArrayList<MovieData> list, Context context, int player) {
+
         this.list = list;
         list2 = list;
         this.context = context;
         this.player = player;
         AnalyticsApplication application = (AnalyticsApplication) context;
         mTracker = application.getDefaultTracker();
+
+        font = Typeface.createFromAsset(context.getAssets(),"gravity.otf");
 
         db = new SQLiteHelper(context);
 
@@ -61,7 +66,7 @@ public class RVAdapt extends RecyclerView.Adapter<RVAdapt.DataHolder> {
 
         ImageView imageView;
         CircularProgressBar cp;
-        TextView percentage, name, year;
+        TextView percentage, name, year, duration, imdb, tomato;
         CardView cv;
 
         DataHolder(final View v) {
@@ -71,6 +76,9 @@ public class RVAdapt extends RecyclerView.Adapter<RVAdapt.DataHolder> {
             percentage = (TextView) v.findViewById(R.id.percentage);
             name = (TextView) v.findViewById(R.id.tvName);
             year = (TextView) v.findViewById(R.id.tvYear);
+            duration = (TextView) v.findViewById(R.id.tvDuration);
+            imdb = (TextView) v.findViewById(R.id.tvIMDB);
+            tomato = (TextView) v.findViewById(R.id.tvTomato);
             cv = (CardView) v.findViewById(R.id.cvList);
             cv.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,13 +98,8 @@ public class RVAdapt extends RecyclerView.Adapter<RVAdapt.DataHolder> {
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        MovieData md = new MovieData(
-                                                list2.get(getAdapterPosition()).getLink(),
-                                                list2.get(getAdapterPosition()).getName(),
-                                                list2.get(getAdapterPosition()).getYear(),
-                                                list2.get(getAdapterPosition()).getImdb()
-                                        );
-                                        db.addMovie(md);
+
+                                        db.addMovie(list2.get(getAdapterPosition()));
                                     }
                                 })
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -117,7 +120,7 @@ public class RVAdapt extends RecyclerView.Adapter<RVAdapt.DataHolder> {
 
     @Override
     public DataHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         DataHolder dh = new DataHolder(v);
         return dh;
     }
@@ -126,15 +129,36 @@ public class RVAdapt extends RecyclerView.Adapter<RVAdapt.DataHolder> {
     public void onBindViewHolder(DataHolder holder1, int position) {
         final DataHolder holder = holder1;
 
+        holder.name.setTypeface(font);
         holder.name.setText(list.get(position).getName());
-        holder.year.setText(list.get(position).getYear());
+        holder.year.setText("("+list.get(position).getYear()+")");
+
+        if(list.get(position).getSeasons().contains("999")){
+            holder.duration.setText(list.get(position).getDuration());
+        }
+        else{
+            holder.duration.setText(list.get(position).getSeasons());
+        }
+
+        if(list.get(position).getRateimdb().contains("999")){
+            holder.imdb.setText("");
+        }else {
+            holder.imdb.setText(list.get(position).getRateimdb());
+        }
+
+        if(list.get(position).getRatetoma().contains("999")){
+            holder.tomato.setText("");
+        }else {
+            holder.tomato.setText(list.get(position).getRatetoma());
+        }
+
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageForEmptyUri(R.drawable.ic_error_black_48dp) // resource or drawable
                 .showImageOnFail(R.drawable.ic_error_black_48dp)
-                .showImageOnLoading(R.drawable.white)
                 .cacheInMemory(false)
                 .cacheOnDisk(true)
                 .build();
+
 
         imageLoader.displayImage(list.get(position).getLink(), holder.imageView, options , new SimpleImageLoadingListener() {
 

@@ -7,9 +7,9 @@
     <color name="red">#CE3A3A</color>
     <color name="darkred">#a32020</color>
     <color name="black">#000</color>
-    <color name="grey">#dcdcdc</color>
+    <color name="grey">#f7f7f7</color>
     <color name="yellow">#eeba30</color>
     <color name="darkgrey">#191919</color>
-    <color name="blue">#336699</color>
+    <color name="blue">#4775a3</color>
     <color name="lightgray">#cecece</color>
 </resources>

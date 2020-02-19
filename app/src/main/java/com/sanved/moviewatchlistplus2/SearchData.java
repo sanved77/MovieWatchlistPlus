@@ -1,14 +1,15 @@
-package com.sanved.moviewatchlistplus;
+package com.sanved.moviewatchlistplus2;
 
 /**
- * Created by Sanved on 06-08-2017.
+ * Created by Sanved on 15-08-2017.
  */
 
-public class MovieData {
+public class SearchData {
 
+    // Constructor
     String link, name, year, imdb;
 
-    public MovieData(String link, String name, String year, String imdb){
+    public SearchData(String link, String name, String year, String imdb){
         this.link = link;
         this.name = name;
         this.year = year;
@@ -30,4 +31,5 @@ public class MovieData {
     public String getImdb() {
         return imdb;
     }
+
 }

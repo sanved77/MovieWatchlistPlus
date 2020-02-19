@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/mshuffle"
+        android:orderInCategory="40"
+        android:title="Shuffle"
+        android:icon="@drawable/ic_shuffle_white_36dp"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/madd"
+        android:orderInCategory="50"
+        android:title="Add"
+        android:icon="@drawable/ic_movie_filter_white_36dp"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/about"
+        android:orderInCategory="100"
+        android:title="About"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/mrefresh"
+        app:showAsAction="never"
+        android:orderInCategory="200"
+        android:title="Refresh"/>
+
+    <item
+        android:id="@+id/bug"
+        android:orderInCategory="300"
+        android:title="Report Bug/Errors"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/rate"
+        android:orderInCategory="400"
+        android:title="Rate our App"
+        app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/mshare"
+        android:orderInCategory="600"
+        android:title="Share this App"
+        app:showAsAction="never" />
+
+
+</menu>

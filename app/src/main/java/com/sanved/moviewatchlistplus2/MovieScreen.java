@@ -1,4 +1,4 @@
-package com.sanved.moviewatchlistplus;
+package com.sanved.moviewatchlistplus2;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -10,10 +10,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -46,12 +49,14 @@ import java.util.ArrayList;
 public class MovieScreen extends AppCompatActivity implements View.OnClickListener {
 
     TextView placeholder, name, year, duration, seasons, genre, plot, director, stars, imdb, tomato;
-    ImageButton done, back, delete;
+    ImageButton back;
+    Button done, delete;
     private ImageView poster;
     CircularProgressBar cp;
     TextView percentage;
     ImageLoader imageLoader;
     SQLiteHelper db;
+    private Tracker mTracker;
 
     private String imdbDB;
 
@@ -82,11 +87,74 @@ public class MovieScreen extends AppCompatActivity implements View.OnClickListen
             poster.setVisibility(View.GONE);
         }
 
-        new MovieInfoTask().execute();
+        MovieData md = db.getMovieById(imdbDB);
+
+        name.setText(md.getName());
+        year.setText(md.getYear());
+        duration.setText(md.getDuration());
+
+        if(!(md.getSeasons().equals("999")))
+            seasons.setText(md.getSeasons());
+
+        genre.setText(md.getGenre());
+        plot.setText(md.getPlot());
+        director.setText(md.getDirector());
+        stars.setText(md.getStars());
+
+        if(!(md.getRateimdb().equals("999")))
+            imdb.setText(md.getRateimdb());
+
+        if(!(md.getRatetoma().equals("999")))
+            tomato.setText(md.getRatetoma());
+
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageForEmptyUri(R.drawable.ic_error_black_48dp) // resource or drawable
+                .showImageOnFail(R.drawable.ic_error_black_48dp)
+                .showImageOnLoading(R.drawable.white)
+                .cacheInMemory(true)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .cacheOnDisk(true)
+                .build();
+
+        imageLoader.displayImage(md.getLink() , poster, options, new SimpleImageLoadingListener() {
+
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+                cp.setProgress(0);
+                percentage.setText("0%");
+                percentage.setVisibility(View.VISIBLE);
+                cp.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                super.onLoadingFailed(imageUri, view, failReason);
+                cp.setVisibility(View.GONE);
+                percentage.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                cp.setVisibility(View.GONE);
+                percentage.setVisibility(View.GONE);
+                poster.setVisibility(View.VISIBLE);
+                //notifyDataSetChanged();
+            }
+        }, new ImageLoadingProgressListener() {
+            @Override
+            public void onProgressUpdate(String imageUri, View view, int current, int total) {
+                cp.setProgress(Math.round(100.0f * current / total));
+                percentage.setText(Math.round(100.0f * current / total) + "%");
+            }
+        });
 
     }
 
     public void initVals() {
+
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
 
         placeholder = (TextView) findViewById(R.id.tvPlaceHolder);
         name = (TextView) findViewById(R.id.tvName);
@@ -111,9 +179,9 @@ public class MovieScreen extends AppCompatActivity implements View.OnClickListen
         imdb.setText("");
         tomato.setText("");
 
-        done = (ImageButton) findViewById(R.id.ibDone);
+        done = (Button) findViewById(R.id.ibDone);
         back = (ImageButton) findViewById(R.id.ibBack);
-        delete = (ImageButton) findViewById(R.id.ibDelete);
+        delete = (Button) findViewById(R.id.ibDelete);
 
         done.setOnClickListener(this);
         back.setOnClickListener(this);
@@ -151,8 +219,8 @@ public class MovieScreen extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    public void removeFromList(int option){
-        String[] titles = {"Done","Delete"};
+    public void removeFromList(final int option){
+        final String[] titles = {"Done","Delete"};
         String[] messages = {"Have you seen this movie/tvshow and want to remove it from the list?","Do you want to remove this movie/show from list ?"};
         AlertDialog.Builder build = new AlertDialog.Builder(this);
         build
@@ -161,8 +229,12 @@ public class MovieScreen extends AppCompatActivity implements View.OnClickListen
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                    db.deleteMovie(imdbDB);
-                    finish();
+                        mTracker.send(new HitBuilders.EventBuilder()
+                                .setCategory("Usage")
+                                .setAction("Removed - " + titles[option] + " " + name.getText().toString())
+                                .build());
+                        db.deleteMovie(imdbDB);
+                        finish();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -346,5 +418,13 @@ public class MovieScreen extends AppCompatActivity implements View.OnClickListen
         }
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTracker.setScreenName("MovieScreen");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
 }
 
